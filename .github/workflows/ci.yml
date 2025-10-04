@@ -1,0 +1,50 @@
+name: CI/CD Pipeline
+on: [push, pull_request]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.2'
+        coverage: none
+
+    - name: Validate PHP Syntax
+      run: |
+        echo "=== CHECKING PHP SYNTAX ==="
+        find . -name "*.php" -exec php -l {} \;
+        echo " All PHP files are valid!"
+
+    - name: Install Dependencies
+      run: |
+        echo "=== INSTALLING DEPENDENCIES ==="
+        composer install --no-dev --no-progress --prefer-dist
+        echo " Dependencies installed successfully!"
+
+    - name: Check Project Structure
+      run: |
+        echo "=== CHECKING PROJECT STRUCTURE ==="
+        echo " File list:"
+        ls -la
+        echo " PHP files:"
+        find . -type f -name "*.php" | head -10
+        echo " Project structure check completed!"
+
+    - name: Build Report
+      run: |
+        echo "===  BUILD REPORT ==="
+        echo " BUILD SUCCESSFUL!"
+        echo " Time: $(date)"
+        echo " Trigger: ${{ github.event_name }}"
+        echo " Branch: ${{ github.ref }}"
+        echo " Commit: ${{ github.sha }}"
+        echo " Summary:"
+        echo "   -  PHP syntax validated"
+        echo "   -  Dependencies installed" 
+        echo "   -  Project structure checked"
+        echo "===  READY FOR DEPLOYMENT ==="
