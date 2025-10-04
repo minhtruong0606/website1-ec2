@@ -1,4 +1,6 @@
 <?php
+// 🚀 CI/CD Test - Last run: <?php echo date('Y-m-d H:i:s'); ?>
+<?php
 	if(!isset($_SESSION)) session_start();
 	
 ?>
