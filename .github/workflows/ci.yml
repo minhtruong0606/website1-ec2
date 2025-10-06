@@ -1,5 +1,7 @@
-name: CI/CD Pipeline
-on: [push, pull_request]
+name: CI/CD Pipeline - Production
+on:
+  push:
+    branches: [ main ]
 
 jobs:
   build-and-test:
@@ -16,20 +18,47 @@ jobs:
     - name: Validate PHP Syntax
       run: |
         echo "=== CHECKING PHP SYNTAX ==="
-        find . -name "*.php" -exec php -l {} \; || echo "No PHP files found"
+        find . -name "*.php" -exec php -l {} \;
         echo "✅ PHP check completed!"
 
-    - name: Check Project Structure
-      run: |
-        echo "=== PROJECT STRUCTURE ==="
-        echo "📂 Files:"
-        ls -la
-        echo "📂 PHP files:"
-        find . -name "*.php" | head -10
-        echo "✅ Structure check completed!"
+  deploy-to-production:
+    runs-on: ubuntu-latest
+    needs: build-and-test
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
 
-    - name: Build Success
+    - name: Deploy to EC2
+      env:
+        EC2_HOST: ${{ secrets.EC2_HOST }}
+        EC2_USER: ${{ secrets.EC2_USER }}
+        SSH_KEY: ${{ secrets.EC2_SSH_KEY }}
       run: |
-        echo "🎉 CI/CD PIPELINE SUCCESS!"
-        echo "📅 Completed at: $(date)"
-        echo "✅ All checks passed!"
+        echo "🚀 STARTING PRODUCTION DEPLOYMENT..."
+        
+        # Tạo SSH key file
+        echo "$SSH_KEY" > private_key.pem
+        chmod 600 private_key.pem
+        
+        # Deploy commands
+        ssh -o StrictHostKeyChecking=no -i private_key.pem $EC2_USER@$EC2_HOST "
+          echo '=== 🎉 PRODUCTION DEPLOYMENT ==='
+          echo '📦 Pulling latest code...'
+          cd /var/www/html
+          sudo git fetch origin
+          sudo git reset --hard origin/main
+          echo '🔧 Setting permissions...'
+          sudo chown -R ubuntu:ubuntu /var/www/html
+          sudo chmod -R 755 /var/www/html
+          echo '🔄 Restarting web server...'
+          sudo systemctl restart apache2
+          echo '✅ Deployment completed!'
+          echo '🌐 Website: http://$EC2_HOST'
+          echo '🕒 Deployed at: $(date)'
+        "
+        
+        # Cleanup
+        rm -f private_key.pem
+        
+        echo "🎉 PRODUCTION DEPLOYMENT SUCCESSFUL!"
+        echo "📊 Live at: http://$EC2_HOST"
