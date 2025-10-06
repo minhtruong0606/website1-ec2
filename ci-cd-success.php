@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🌟 Portfolio - [Tên của bạn]</title>
+    <title>🏍️ Moto Elite - Showroom Xe Phân Khối Lớn</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --primary: #667eea;
-            --secondary: #764ba2;
-            --accent: #f093fb;
-            --dark: #2d3748;
-            --light: #f7fafc;
+            --primary: #dc2626;
+            --secondary: #000;
+            --accent: #fbbf24;
+            --dark: #1f2937;
+            --light: #f8fafc;
         }
         
         * {
@@ -22,10 +22,9 @@
         
         body {
             font-family: 'Inter', 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--dark) 100%);
             color: var(--light);
             line-height: 1.6;
-            overflow-x: hidden;
         }
         
         /* Navigation */
@@ -33,15 +32,14 @@
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
+            background: rgba(0, 0, 0, 0.95);
             padding: 1rem 2rem;
             z-index: 1000;
-            transition: all 0.3s ease;
+            border-bottom: 2px solid var(--primary);
         }
         
         .nav-content {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
@@ -49,11 +47,9 @@
         }
         
         .logo {
-            font-size: 1.8rem;
+            font-size: 2rem;
             font-weight: bold;
-            background: linear-gradient(45deg, var(--accent), #ffecd2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--primary);
         }
         
         .nav-links {
@@ -64,6 +60,7 @@
         .nav-links a {
             color: var(--light);
             text-decoration: none;
+            font-weight: 500;
             transition: color 0.3s ease;
         }
         
@@ -74,20 +71,23 @@
         /* Hero Section */
         .hero {
             min-height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+                        url('https://images.unsplash.com/photo-1558618666-fcd25856e883?ixlib=rb-4.0.3') center/cover;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
             padding: 0 2rem;
-            position: relative;
         }
         
         .hero-content h1 {
-            font-size: 4rem;
+            font-size: 4.5rem;
             margin-bottom: 1rem;
-            background: linear-gradient(45deg, #fff, var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .hero-content .highlight {
+            color: var(--primary);
         }
         
         .hero-content p {
@@ -98,100 +98,178 @@
         
         .cta-button {
             display: inline-block;
-            padding: 1rem 2rem;
-            background: linear-gradient(45deg, var(--accent), #ffecd2);
-            color: var(--dark);
+            padding: 1.2rem 2.5rem;
+            background: var(--primary);
+            color: white;
             text-decoration: none;
-            border-radius: 50px;
+            border-radius: 5px;
             font-weight: bold;
-            transition: transform 0.3s ease;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
         
         .cta-button:hover {
+            background: var(--accent);
             transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(220, 38, 38, 0.3);
         }
         
         /* Sections */
         .section {
             padding: 5rem 2rem;
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
         }
         
         .section-title {
             text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-            background: linear-gradient(45deg, var(--accent), #ffecd2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        /* Skills */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-        
-        .skill-card {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 2rem;
-            border-radius: 15px;
-            text-align: center;
-            backdrop-filter: blur(10px);
-            transition: transform 0.3s ease;
-        }
-        
-        .skill-card:hover {
-            transform: translateY(-10px);
-        }
-        
-        .skill-icon {
             font-size: 3rem;
-            margin-bottom: 1rem;
-            color: var(--accent);
+            margin-bottom: 3rem;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
         
-        /* Projects */
-        .projects-grid {
+        /* Motorcycles Grid */
+        .bikes-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 2rem;
         }
         
-        .project-card {
-            background: rgba(255, 255, 255, 0.1);
+        .bike-card {
+            background: rgba(255, 255, 255, 0.05);
             border-radius: 15px;
             overflow: hidden;
-            backdrop-filter: blur(10px);
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
-        .project-card:hover {
+        .bike-card:hover {
             transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(220, 38, 38, 0.2);
         }
         
-        .project-image {
-            height: 200px;
-            background: linear-gradient(45deg, var(--primary), var(--accent));
+        .bike-image {
+            height: 250px;
+            background: linear-gradient(45deg, #333, #666);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 3rem;
+            font-size: 4rem;
+            position: relative;
+            overflow: hidden;
         }
         
-        .project-content {
+        .bike-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .bike-card:hover .bike-image::before {
+            left: 100%;
+        }
+        
+        .bike-content {
             padding: 1.5rem;
+        }
+        
+        .bike-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent);
+        }
+        
+        .bike-specs {
+            list-style: none;
+            margin: 1rem 0;
+        }
+        
+        .bike-specs li {
+            padding: 0.3rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .bike-specs li:last-child {
+            border-bottom: none;
+        }
+        
+        .bike-price {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin: 1rem 0;
+        }
+        
+        .bike-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .btn {
+            flex: 1;
+            padding: 0.8rem 1rem;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            text-decoration: none;
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: var(--light);
+            border: 2px solid var(--primary);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        /* Features */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .feature-card {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
         }
         
         /* CI/CD Badge */
         .ci-cd-badge {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(220, 38, 38, 0.1);
             padding: 2rem;
             border-radius: 15px;
             text-align: center;
-            backdrop-filter: blur(10px);
+            border: 2px solid var(--primary);
             margin-top: 3rem;
         }
         
@@ -209,19 +287,20 @@
         }
         
         /* Animations */
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
+        @keyframes slideIn {
+            from { transform: translateX(-100px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
         }
         
-        .floating {
-            animation: float 6s ease-in-out infinite;
+        .slide-in {
+            animation: slideIn 0.6s ease-out;
         }
         
         /* Responsive */
         @media (max-width: 768px) {
             .hero-content h1 { font-size: 2.5rem; }
             .nav-links { display: none; }
+            .bike-actions { flex-direction: column; }
         }
     </style>
 </head>
@@ -229,128 +308,141 @@
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-content">
-            <div class="logo">🌟 Portfolio</div>
+            <div class="logo">🏍️ MotoElite</div>
             <div class="nav-links">
-                <a href="#home">Home</a>
-                <a href="#about">About</a>
-                <a href="#skills">Skills</a>
-                <a href="#projects">Projects</a>
-                <a href="#contact">Contact</a>
+                <a href="#home">Trang Chủ</a>
+                <a href="#bikes">Danh Sách Xe</a>
+                <a href="#about">Về Chúng Tôi</a>
+                <a href="#contact">Liên Hệ</a>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
     <section id="home" class="hero">
-        <div class="hero-content">
-            <h1 class="floating">Xin chào, I'm [Your Name]</h1>
-            <p>Full Stack Developer & DevOps Engineer</p>
-            <p>Creating amazing digital experiences</p>
-            <a href="#projects" class="cta-button">
-                <i class="fas fa-rocket"></i> View My Work
+        <div class="hero-content slide-in">
+            <h1>KHÁM PHÁ <span class="highlight">ĐAM MÊ</span> TỐC ĐỘ</h1>
+            <p>Showroom xe phân khối lớn chính hãng - Trải nghiệm đẳng cấp</p>
+            <a href="#bikes" class="cta-button">
+                <i class="fas fa-motorcycle"></i> Khám Phá Ngay
             </a>
         </div>
     </section>
 
-    <!-- About Section -->
-    <section id="about" class="section">
-        <h2 class="section-title">About Me</h2>
-        <div class="skills-grid">
-            <div class="skill-card">
-                <div class="skill-icon">💻</div>
-                <h3>2+ Years</h3>
-                <p>Experience in Web Development</p>
-            </div>
-            <div class="skill-card">
-                <div class="skill-icon">🚀</div>
-                <h3>50+ Projects</h3>
-                <p>Completed Successfully</p>
-            </div>
-            <div class="skill-card">
-                <div class="skill-icon">⭐</div>
-                <h3>Full Stack</h3>
-                <p>Frontend & Backend Expert</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Skills Section -->
-    <section id="skills" class="section">
-        <h2 class="section-title">My Skills</h2>
-        <div class="skills-grid">
-            <div class="skill-card">
-                <i class="skill-icon fab fa-php"></i>
-                <h3>PHP & Laravel</h3>
-                <p>Backend Development</p>
-            </div>
-            <div class="skill-card">
-                <i class="skill-icon fab fa-js"></i>
-                <h3>JavaScript</h3>
-                <p>Frontend & React</p>
-            </div>
-            <div class="skill-card">
-                <i class="skill-icon fab fa-aws"></i>
-                <h3>AWS Cloud</h3>
-                <p>DevOps & Infrastructure</p>
-            </div>
-            <div class="skill-card">
-                <i class="skill-icon fas fa-database"></i>
-                <h3>Database</h3>
-                <p>MySQL & MongoDB</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Projects Section -->
-    <section id="projects" class="section">
-        <h2 class="section-title">My Projects</h2>
-        <div class="projects-grid">
-            <!-- Project 1 -->
-            <div class="project-card">
-                <div class="project-image">
-                    <i class="fas fa-shopping-cart"></i>
+    <!-- Motorcycles Section -->
+    <section id="bikes" class="section">
+        <h2 class="section-title">DANH SÁCH XE NỔI BẬT</h2>
+        <div class="bikes-grid">
+            
+            <!-- Bike 1 -->
+            <div class="bike-card">
+                <div class="bike-image">
+                    <i class="fas fa-motorcycle"></i>
                 </div>
-                <div class="project-content">
-                    <h3>E-Commerce Platform</h3>
-                    <p>Full-stack e-commerce solution with payment integration</p>
-                    <div class="tech-stack">
-                        <span class="tech-tag">PHP</span>
-                        <span class="tech-tag">MySQL</span>
-                        <span class="tech-tag">AWS</span>
+                <div class="bike-content">
+                    <h3 class="bike-title">Yamaha R1M 2024</h3>
+                    <ul class="bike-specs">
+                        <li><i class="fas fa-tachometer-alt"></i> 998cc - 200HP</li>
+                        <li><i class="fas fa-bolt"></i> 0-100km/h: 2.8s</li>
+                        <li><i class="fas fa-weight"></i> Trọng lượng: 200kg</li>
+                        <li><i class="fas fa-palette"></i> Màu sắc: Xanh Carbon</li>
+                    </ul>
+                    <div class="bike-price">1.250.000.000₫</div>
+                    <div class="bike-actions">
+                        <button class="btn btn-primary">Đặt Hàng Ngay</button>
+                        <button class="btn btn-secondary">Chi Tiết</button>
                     </div>
                 </div>
             </div>
             
-            <!-- Project 2 -->
-            <div class="project-card">
-                <div class="project-image">
-                    <i class="fas fa-chart-line"></i>
+            <!-- Bike 2 -->
+            <div class="bike-card">
+                <div class="bike-image">
+                    <i class="fas fa-motorcycle"></i>
                 </div>
-                <div class="project-content">
-                    <h3>Analytics Dashboard</h3>
-                    <p>Real-time data visualization and reporting system</p>
-                    <div class="tech-stack">
-                        <span class="tech-tag">React</span>
-                        <span class="tech-tag">Node.js</span>
-                        <span class="tech-tag">MongoDB</span>
+                <div class="bike-content">
+                    <h3 class="bike-title">Ducati Panigale V4</h3>
+                    <ul class="bike-specs">
+                        <li><i class="fas fa-tachometer-alt"></i> 1103cc - 214HP</li>
+                        <li><i class="fas fa-bolt"></i> 0-100km/h: 2.6s</li>
+                        <li><i class="fas fa-weight"></i> Trọng lượng: 198kg</li>
+                        <li><i class="fas fa-palette"></i> Màu sắc: Đỏ Ducati</li>
+                    </ul>
+                    <div class="bike-price">1.850.000.000₫</div>
+                    <div class="bike-actions">
+                        <button class="btn btn-primary">Đặt Hàng Ngay</button>
+                        <button class="btn btn-secondary">Chi Tiết</button>
                     </div>
                 </div>
             </div>
             
-            <!-- Project 3 -->
-            <div class="project-card">
-                <div class="project-image">
-                    <i class="fas fa-mobile-alt"></i>
+            <!-- Bike 3 -->
+            <div class="bike-card">
+                <div class="bike-image">
+                    <i class="fas fa-motorcycle"></i>
                 </div>
-                <div class="project-content">
-                    <h3>Mobile App</h3>
-                    <p>Cross-platform mobile application with cloud sync</p>
-                    <div class="tech-stack">
-                        <span class="tech-tag">Flutter</span>
-                        <span class="tech-tag">Firebase</span>
-                        <span class="tech-tag">REST API</span>
+                <div class="bike-content">
+                    <h3 class="bike-title">Kawasaki Ninja H2</h3>
+                    <ul class="bike-specs">
+                        <li><i class="fas fa-tachometer-alt"></i> 998cc - 231HP</li>
+                        <li><i class="fas fa-bolt"></i> 0-100km/h: 2.5s</li>
+                        <li><i class="fas fa-weight"></i> Trọng lượng: 238kg</li>
+                        <li><i class="fas fa-palette"></i> Màu sắc: Xanh Kawasaki</li>
+                    </ul>
+                    <div class="bike-price">2.150.000.000₫</div>
+                    <div class="bike-actions">
+                        <button class="btn btn-primary">Đặt Hàng Ngay</button>
+                        <button class="btn btn-secondary">Chi Tiết</button>
                     </div>
                 </div>
+            </div>
+            
+            <!-- Bike 4 -->
+            <div class="bike-card">
+                <div class="bike-image">
+                    <i class="fas fa-motorcycle"></i>
+                </div>
+                <div class="bike-content">
+                    <h3 class="bike-title">BMW S1000RR</h3>
+                    <ul class="bike-specs">
+                        <li><i class="fas fa-tachometer-alt"></i> 999cc - 207HP</li>
+                        <li><i class="fas fa-bolt"></i> 0-100km/h: 2.9s</li>
+                        <li><i class="fas fa-weight"></i> Trọng lượng: 197kg</li>
+                        <li><i class="fas fa-palette"></i> Màu sắc: Trắng Xanh BMW</li>
+                    </ul>
+                    <div class="bike-price">1.450.000.000₫</div>
+                    <div class="bike-actions">
+                        <button class="btn btn-primary">Đặt Hàng Ngay</button>
+                        <button class="btn btn-secondary">Chi Tiết</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section">
+        <h2 class="section-title">DỊCH VỤ CỦA CHÚNG TÔI</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+                <h3>Bảo Hành Chính Hãng</h3>
+                <p>Bảo hành 3 năm không giới hạn km</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-tools"></i></div>
+                <h3>Bảo Dưỡng Chuyên Nghiệp</h3>
+                <p>Đội ngũ kỹ thuật viên tay nghề cao</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-shipping-fast"></i></div>
+                <h3>Giao Xe Tận Nhà</h3>
+                <p>Miễn phí vận chuyển toàn quốc</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-credit-card"></i></div>
+                <h3>Trả Góp 0%</h3>
+                <p>Hỗ trợ trả góp lãi suất ưu đãi</p>
             </div>
         </div>
     </section>
@@ -358,28 +450,28 @@
     <!-- CI/CD Section -->
     <section class="section">
         <div class="ci-cd-badge">
-            <h2>🚀 DevOps & CI/CD</h2>
-            <p>This portfolio is automatically deployed using CI/CD Pipeline</p>
+            <h2>🏍️ POWERED BY CI/CD</h2>
+            <p>Website showroom được tự động deploy qua GitHub Actions</p>
             <div class="deploy-info">
                 <div class="info-item">
                     <i class="fas fa-code-branch"></i>
-                    <h4>GitHub Actions</h4>
-                    <p>Automated Workflows</p>
+                    <h4>Git Push</h4>
+                    <p>Trigger Auto Deploy</p>
                 </div>
                 <div class="info-item">
                     <i class="fas fa-server"></i>
                     <h4>AWS EC2</h4>
-                    <p>Production Server</p>
+                    <p>High Performance</p>
                 </div>
                 <div class="info-item">
                     <i class="fas fa-rocket"></i>
-                    <h4>Auto Deploy</h4>
-                    <p>Zero Downtime</p>
+                    <h4>Zero Downtime</h4>
+                    <p>Auto Restart</p>
                 </div>
                 <div class="info-item">
-                    <i class="fas fa-clock"></i>
-                    <h4>Last Deploy</h4>
-                    <p><?php echo date('Y-m-d H:i:s'); ?></p>
+                    <i class="fas fa-sync-alt"></i>
+                    <h4>Last Update</h4>
+                    <p><?php echo date('d/m/Y H:i:s'); ?></p>
                 </div>
             </div>
         </div>
@@ -396,41 +488,56 @@
             });
         });
 
+        // Add to cart functionality
+        document.querySelectorAll('.btn-primary').forEach(button => {
+            button.addEventListener('click', function() {
+                const bikeName = this.closest('.bike-card').querySelector('.bike-title').textContent;
+                const bikePrice = this.closest('.bike-card').querySelector('.bike-price').textContent;
+                
+                alert(`🏍️ ĐÃ THÊM VÀO GIỎ HÀNG!\n\n${bikeName}\n${bikePrice}\n\nCảm ơn quý khách!`);
+            });
+        });
+
         // Navbar background on scroll
         window.addEventListener('scroll', function() {
             if (window.scrollY > 100) {
-                document.querySelector('.navbar').style.background = 'rgba(45, 55, 72, 0.95)';
+                document.querySelector('.navbar').style.background = 'rgba(0, 0, 0, 0.98)';
             } else {
-                document.querySelector('.navbar').style.background = 'rgba(255, 255, 255, 0.1)';
+                document.querySelector('.navbar').style.background = 'rgba(0, 0, 0, 0.95)';
             }
         });
 
-        // Typewriter effect
-        const texts = ['Full Stack Developer', 'DevOps Engineer', 'Cloud Architect', 'Problem Solver'];
-        let count = 0;
-        let index = 0;
-        let currentText = '';
-        let letter = '';
-
-        function typeWriter() {
-            if (count === texts.length) {
-                count = 0;
-            }
-            currentText = texts[count];
-            letter = currentText.slice(0, ++index);
-
-            document.querySelector('.hero-content p').textContent = letter;
-            if (letter.length === currentText.length) {
-                count++;
-                index = 0;
-                setTimeout(typeWriter, 2000);
-            } else {
-                setTimeout(typeWriter, 100);
-            }
+        // Bike counter animation
+        function animateValue(element, start, end, duration) {
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                const value = Math.floor(progress * (end - start) + start);
+                element.textContent = value.toLocaleString() + '₫';
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
         }
 
-        // Start typewriter after page load
-        window.addEventListener('load', typeWriter);
+        // Animate prices when in viewport
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const priceElement = entry.target;
+                    const priceText = priceElement.textContent;
+                    const priceValue = parseInt(priceText.replace(/[^\d]/g, ''));
+                    animateValue(priceElement, 0, priceValue, 2000);
+                    observer.unobserve(priceElement);
+                }
+            });
+        });
+
+        document.querySelectorAll('.bike-price').forEach(price => {
+            observer.observe(price);
+        });
     </script>
 </body>
 </html>
