@@ -1,436 +1,84 @@
+<?php
+include 'config/database.php';
+$database = new Database();
+$db = $database->getConnection();
+
+// Lấy danh sách sản phẩm
+$query = "SELECT p.*, c.name as category_name FROM products p LEFT JOIN categories c ON p.category_id = c.id ORDER BY p.created_at DESC LIMIT 8";
+$stmt = $db->prepare($query);
+$stmt->execute();
+$products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+?>
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🌟 Portfolio - minhtruong</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Web2 - Cửa hàng điện tử</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        :root {
-            --primary: #667eea;
-            --secondary: #764ba2;
-            --accent: #f093fb;
-            --dark: #2d3748;
-            --light: #f7fafc;
+        .product-card {
+            transition: transform 0.3s;
+            margin-bottom: 20px;
         }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        .product-card:hover {
+            transform: translateY(-5px);
         }
-        
-        body {
-            font-family: 'Inter', 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            color: var(--light);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-        
-        /* Navigation */
-        .navbar {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            padding: 1rem 2rem;
-            z-index: 1000;
-            transition: all 0.3s ease;
-        }
-        
-        .nav-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .logo {
-            font-size: 1.8rem;
+        .price {
+            color: #d70018;
             font-weight: bold;
-            background: linear-gradient(45deg, var(--accent), #ffecd2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-        }
-        
-        .nav-links a {
-            color: var(--light);
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-        
-        .nav-links a:hover {
-            color: var(--accent);
-        }
-        
-        /* Hero Section */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 0 2rem;
-            position: relative;
-        }
-        
-        .hero-content h1 {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-            background: linear-gradient(45deg, #fff, var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .hero-content p {
-            font-size: 1.5rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
-        }
-        
-        .cta-button {
-            display: inline-block;
-            padding: 1rem 2rem;
-            background: linear-gradient(45deg, var(--accent), #ffecd2);
-            color: var(--dark);
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: bold;
-            transition: transform 0.3s ease;
-        }
-        
-        .cta-button:hover {
-            transform: translateY(-3px);
-        }
-        
-        /* Sections */
-        .section {
-            padding: 5rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-            background: linear-gradient(45deg, var(--accent), #ffecd2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        /* Skills */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-        
-        .skill-card {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 2rem;
-            border-radius: 15px;
-            text-align: center;
-            backdrop-filter: blur(10px);
-            transition: transform 0.3s ease;
-        }
-        
-        .skill-card:hover {
-            transform: translateY(-10px);
-        }
-        
-        .skill-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            color: var(--accent);
-        }
-        
-        /* Projects */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-        
-        .project-card {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            overflow: hidden;
-            backdrop-filter: blur(10px);
-            transition: transform 0.3s ease;
-        }
-        
-        .project-card:hover {
-            transform: translateY(-10px);
-        }
-        
-        .project-image {
-            height: 200px;
-            background: linear-gradient(45deg, var(--primary), var(--accent));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-        }
-        
-        .project-content {
-            padding: 1.5rem;
-        }
-        
-        /* CI/CD Badge */
-        .ci-cd-badge {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 2rem;
-            border-radius: 15px;
-            text-align: center;
-            backdrop-filter: blur(10px);
-            margin-top: 3rem;
-        }
-        
-        .deploy-info {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-        
-        .info-item {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 1rem;
-            border-radius: 10px;
-        }
-        
-        /* Animations */
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-        }
-        
-        .floating {
-            animation: float 6s ease-in-out infinite;
-        }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero-content h1 { font-size: 2.5rem; }
-            .nav-links { display: none; }
+            font-size: 1.2em;
         }
     </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-content">
-            <div class="logo">🌟 Portfolio</div>
-            <div class="nav-links">
-                <a href="#home">Home</a>
-                <a href="#about">About</a>
-                <a href="#skills">Skills</a>
-                <a href="#projects">Projects</a>
-                <a href="#contact">Contact</a>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.php">Web2 Store</a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="index.php">Trang chủ</a>
+                <a class="nav-link" href="products.php">Sản phẩm</a>
+                <a class="nav-link" href="cart.php">Giỏ hàng</a>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="hero-content">
-            <h1 class="floating">Xin chào, I'm [Your Name]</h1>
-            <p>Full Stack Developer & DevOps Engineer</p>
-            <p>Creating amazing digital experiences</p>
-            <a href="#projects" class="cta-button">
-                <i class="fas fa-rocket"></i> View My Work
-            </a>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="section">
-        <h2 class="section-title">About Me</h2>
-        <div class="skills-grid">
-            <div class="skill-card">
-                <div class="skill-icon">💻</div>
-                <h3>2+ Years</h3>
-                <p>Experience in Web Development</p>
-            </div>
-            <div class="skill-card">
-                <div class="skill-icon">🚀</div>
-                <h3>50+ Projects</h3>
-                <p>Completed Successfully</p>
-            </div>
-            <div class="skill-card">
-                <div class="skill-icon">⭐</div>
-                <h3>Full Stack</h3>
-                <p>Frontend & Backend Expert</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Skills Section -->
-    <section id="skills" class="section">
-        <h2 class="section-title">My Skills</h2>
-        <div class="skills-grid">
-            <div class="skill-card">
-                <i class="skill-icon fab fa-php"></i>
-                <h3>PHP & Laravel</h3>
-                <p>Backend Development</p>
-            </div>
-            <div class="skill-card">
-                <i class="skill-icon fab fa-js"></i>
-                <h3>JavaScript</h3>
-                <p>Frontend & React</p>
-            </div>
-            <div class="skill-card">
-                <i class="skill-icon fab fa-aws"></i>
-                <h3>AWS Cloud</h3>
-                <p>DevOps & Infrastructure</p>
-            </div>
-            <div class="skill-card">
-                <i class="skill-icon fas fa-database"></i>
-                <h3>Database</h3>
-                <p>MySQL & MongoDB</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Projects Section -->
-    <section id="projects" class="section">
-        <h2 class="section-title">My Projects</h2>
-        <div class="projects-grid">
-            <!-- Project 1 -->
-            <div class="project-card">
-                <div class="project-image">
-                    <i class="fas fa-shopping-cart"></i>
-                </div>
-                <div class="project-content">
-                    <h3>E-Commerce Platform</h3>
-                    <p>Full-stack e-commerce solution with payment integration</p>
-                    <div class="tech-stack">
-                        <span class="tech-tag">PHP</span>
-                        <span class="tech-tag">MySQL</span>
-                        <span class="tech-tag">AWS</span>
+    <div class="container mt-4">
+        <h2 class="text-center mb-4">Sản phẩm nổi bật</h2>
+        
+        <div class="row">
+            <?php foreach ($products as $product): ?>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="card product-card h-100">
+                    <img src="assets/images/<?php echo $product['image'] ?? 'default.jpg'; ?>" class="card-img-top" alt="<?php echo $product['name']; ?>" style="height: 200px; object-fit: cover;">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title"><?php echo $product['name']; ?></h5>
+                        <p class="card-text flex-grow-1"><?php echo substr($product['description'], 0, 80); ?>...</p>
+                        <div class="mt-auto">
+                            <div class="price"><?php echo number_format($product['price'], 0, ',', '.'); ?> ₫</div>
+                            <div class="text-muted small">Kho: <?php echo $product['stock']; ?> sp</div>
+                            <form action="cart.php" method="POST" class="mt-2">
+                                <input type="hidden" name="product_id" value="<?php echo $product['id']; ?>">
+                                <input type="hidden" name="action" value="add">
+                                <button type="submit" class="btn btn-primary btn-sm w-100" <?php echo $product['stock'] == 0 ? 'disabled' : ''; ?>>
+                                    <?php echo $product['stock'] == 0 ? 'Hết hàng' : 'Thêm vào giỏ'; ?>
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
-            
-            <!-- Project 2 -->
-            <div class="project-card">
-                <div class="project-image">
-                    <i class="fas fa-chart-line"></i>
-                </div>
-                <div class="project-content">
-                    <h3>Analytics Dashboard</h3>
-                    <p>Real-time data visualization and reporting system</p>
-                    <div class="tech-stack">
-                        <span class="tech-tag">React</span>
-                        <span class="tech-tag">Node.js</span>
-                        <span class="tech-tag">MongoDB</span>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Project 3 -->
-            <div class="project-card">
-                <div class="project-image">
-                    <i class="fas fa-mobile-alt"></i>
-                </div>
-                <div class="project-content">
-                    <h3>Mobile App</h3>
-                    <p>Cross-platform mobile application with cloud sync</p>
-                    <div class="tech-stack">
-                        <span class="tech-tag">Flutter</span>
-                        <span class="tech-tag">Firebase</span>
-                        <span class="tech-tag">REST API</span>
-                    </div>
-                </div>
-            </div>
+            <?php endforeach; ?>
         </div>
-    </section>
+    </div>
 
-    <!-- CI/CD Section -->
-    <section class="section">
-        <div class="ci-cd-badge">
-            <h2>🚀 DevOps & CI/CD</h2>
-            <p>This portfolio is automatically deployed using CI/CD Pipeline</p>
-            <div class="deploy-info">
-                <div class="info-item">
-                    <i class="fas fa-code-branch"></i>
-                    <h4>GitHub Actions</h4>
-                    <p>Automated Workflows</p>
-                </div>
-                <div class="info-item">
-                    <i class="fas fa-server"></i>
-                    <h4>AWS EC2</h4>
-                    <p>Production Server</p>
-                </div>
-                <div class="info-item">
-                    <i class="fas fa-rocket"></i>
-                    <h4>Auto Deploy</h4>
-                    <p>Zero Downtime</p>
-                </div>
-                <div class="info-item">
-                    <i class="fas fa-clock"></i>
-                    <h4>Last Deploy</h4>
-                    <p><?php echo date('Y-m-d H:i:s'); ?></p>
-                </div>
-            </div>
+    <footer class="bg-dark text-white text-center py-3 mt-5">
+        <div class="container">
+            <p>&copy; 2024 Web2 Store. All rights reserved.</p>
         </div>
-    </section>
+    </footer>
 
-    <script>
-        // Smooth scrolling
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-
-        // Navbar background on scroll
-        window.addEventListener('scroll', function() {
-            if (window.scrollY > 100) {
-                document.querySelector('.navbar').style.background = 'rgba(45, 55, 72, 0.95)';
-            } else {
-                document.querySelector('.navbar').style.background = 'rgba(255, 255, 255, 0.1)';
-            }
-        });
-
-        // Typewriter effect
-        const texts = ['Full Stack Developer', 'DevOps Engineer', 'Cloud Architect', 'Problem Solver'];
-        let count = 0;
-        let index = 0;
-        let currentText = '';
-        let letter = '';
-
-        function typeWriter() {
-            if (count === texts.length) {
-                count = 0;
-            }
-            currentText = texts[count];
-            letter = currentText.slice(0, ++index);
-
-            document.querySelector('.hero-content p').textContent = letter;
-            if (letter.length === currentText.length) {
-                count++;
-                index = 0;
-                setTimeout(typeWriter, 2000);
-            } else {
-                setTimeout(typeWriter, 100);
-            }
-        }
-
-        // Start typewriter after page load
-        window.addEventListener('load', typeWriter);
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
