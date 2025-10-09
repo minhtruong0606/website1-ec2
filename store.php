@@ -71,7 +71,7 @@
 					<div class="col-md-12">
 						<ul class="breadcrumb-tree">
 							<li><a href="index.php">Home</a></li>
-							<li><a href="store.php">Danh mục</a></li>
+							<li><a href="store.php">Danh mục san pham</a></li>
 							<li><a href="#">Linh kiện</a></li>
 							<li class="active">Sản phẩm (<?php echo isset($count_item)?$count_item:0; ?> Kết quả) <?php echo isset($basic_key)&&$basic_key!=''?" với từ khoá: <strong style='color:red; font-size:140%;'>$basic_key</strong>":''; ?></li>
 						</ul>
