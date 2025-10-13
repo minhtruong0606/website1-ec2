@@ -1,112 +1,331 @@
 <?php
-// File test kết nối database và hiển thị cơ bản
-echo "<!DOCTYPE html>
-<html lang='vi'>
+include 'config.php';
+
+// Lấy thông tin sản phẩm
+$stmt = $pdo->query("SELECT * FROM products WHERE id = 1");
+$product = $stmt->fetch(PDO::FETCH_ASSOC);
+
+// Lấy đánh giá
+$reviews_stmt = $pdo->prepare("SELECT * FROM reviews WHERE product_id = ? ORDER BY created_at DESC LIMIT 3");
+$reviews_stmt->execute([1]);
+$reviews = $reviews_stmt->fetchAll(PDO::FETCH_ASSOC);
+?>
+
+<!DOCTYPE html>
+<html lang="vi">
 <head>
-    <meta charset='UTF-8'>
-    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-    <title>Test Web2</title>
-    <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css' rel='stylesheet'>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iPhone 17 ProMax - Apple</title>
     <style>
-        .test-box { border: 2px solid #007bff; padding: 20px; margin: 10px 0; border-radius: 10px; }
-        .success { border-color: #28a745; background-color: #f8fff9; }
-        .error { border-color: #dc3545; background-color: #fff8f8; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f7;
+            color: #1d1d1f;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: #000;
+            color: #fff;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #fff;
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #2997ff;
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, #000 0%, #333 100%);
+            color: #fff;
+            padding: 100px 0;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 56px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .hero p {
+            font-size: 28px;
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+        
+        .hero .price {
+            font-size: 24px;
+            color: #86868b;
+            margin-bottom: 30px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: #0071e3;
+            color: #fff;
+            padding: 12px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background 0.3s;
+        }
+        
+        .btn:hover {
+            background: #0077ed;
+        }
+        
+        .features {
+            padding: 80px 0;
+            background: #fff;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 40px;
+            margin-bottom: 50px;
+            font-weight: 600;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+        
+        .feature-card {
+            text-align: center;
+            padding: 30px;
+            border-radius: 18px;
+            background: #f5f5f7;
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .feature-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: #0071e3;
+        }
+        
+        .feature-card h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+        
+        .reviews {
+            padding: 80px 0;
+            background: #f5f5f7;
+        }
+        
+        .review-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .review-card {
+            background: #fff;
+            padding: 30px;
+            border-radius: 18px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .customer-name {
+            font-weight: 600;
+            font-size: 18px;
+        }
+        
+        .rating {
+            color: #ff9500;
+        }
+        
+        footer {
+            background: #000;
+            color: #86868b;
+            padding: 50px 0 20px;
+            text-align: center;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+        
+        .footer-links a {
+            color: #86868b;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 14px;
+        }
+        
+        .footer-links a:hover {
+            color: #fff;
+        }
+        
+        .copyright {
+            font-size: 12px;
+            margin-top: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 40px;
+            }
+            
+            .hero p {
+                font-size: 22px;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body>
-    <div class='container mt-4'>
-        <h1 class='text-center mb-4'>🧪 Test Web2 Interface</h1>";
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="#" class="logo">Apple</a>
+                <ul class="nav-links">
+                    <li><a href="#">Trang chủ</a></li>
+                    <li><a href="#features">Tính năng</a></li>
+                    <li><a href="#reviews">Đánh giá</a></li>
+                    <li><a href="#" class="btn">Mua ngay</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-// Test 1: Kết nối database
-echo "<div class='test-box'>
-        <h3>1. Database Connection Test</h3>";
+    <section class="hero">
+        <div class="container">
+            <h1>iPhone 17 ProMax</h1>
+            <p>Tương lai trong tầm tay bạn</p>
+            <div class="price">Từ $<?php echo $product['price']; ?></div>
+            <a href="#" class="btn">Mua ngay</a>
+        </div>
+    </section>
 
-try {
-    include 'config/database.php';
-    $database = new Database();
-    $db = $database->getConnection();
-    
-    if ($db) {
-        echo "<p class='text-success'>✅ Kết nối database thành công!</p>";
-        
-        // Test query
-        $stmt = $db->query("SELECT COUNT(*) as count FROM products");
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        echo "<p class='text-success'>✅ Số sản phẩm trong database: " . $result['count'] . "</p>";
-    }
-} catch (Exception $e) {
-    echo "<p class='text-danger'>❌ Lỗi kết nối database: " . $e->getMessage() . "</p>";
-}
-
-echo "</div>";
-
-// Test 2: Session và giỏ hàng
-echo "<div class='test-box'>
-        <h3>2. Session & Cart Test</h3>";
-
-session_start();
-if (!isset($_SESSION['cart'])) {
-    $_SESSION['cart'] = [];
-    echo "<p class='text-success'>✅ Session cart khởi tạo thành công!</p>";
-} else {
-    echo "<p class='text-success'>✅ Session cart đã tồn tại với " . count($_SESSION['cart']) . " sản phẩm</p>";
-}
-
-echo "</div>";
-
-// Test 3: Hiển thị sản phẩm mẫu
-echo "<div class='test-box'>
-        <h3>3. Product Display Test</h3>
-        <div class='row'>";
-
-// Hiển thị 2 sản phẩm mẫu
-$products = [
-    ['id' => 1, 'name' => 'iPhone Test', 'price' => 10000000, 'image' => 'default.jpg', 'stock' => 10],
-    ['id' => 2, 'name' => 'Samsung Test', 'price' => 8000000, 'image' => 'default.jpg', 'stock' => 5]
-];
-
-foreach ($products as $product) {
-    echo "<div class='col-md-6 mb-3'>
-            <div class='card'>
-                <div class='card-body'>
-                    <h5 class='card-title'>{$product['name']}</h5>
-                    <p class='card-text text-danger fw-bold'>" . number_format($product['price'], 0, ',', '.') . " ₫</p>
-                    <button class='btn btn-primary btn-sm'>Thêm vào giỏ</button>
+    <section class="features" id="features">
+        <div class="container">
+            <h2 class="section-title">Tính năng đột phá</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>Màn hình 6.9"</h3>
+                    <p>Màn hình Super Retina XDR với công nghệ ProMotion 120Hz</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🚀</div>
+                    <h3>Chip A17 Bionic</h3>
+                    <p>Hiệu năng vượt trội với chip xử lý mạnh mẽ nhất từ Apple</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📸</div>
+                    <h3>Camera 48MP</h3>
+                    <p>Hệ thống camera chuyên nghiệp với khả năng quay video 8K</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔋</div>
+                    <h3>Pin 5000mAh</h3>
+                    <p>Thời lượng pin cả ngày với công nghệ sạc nhanh 45W</p>
                 </div>
             </div>
-        </div>";
-}
-
-echo "</div></div>";
-
-// Test 4: Form test
-echo "<div class='test-box'>
-        <h3>4. Form Test</h3>
-        <form class='row g-3'>
-            <div class='col-md-6'>
-                <label class='form-label'>Họ tên</label>
-                <input type='text' class='form-control' placeholder='Nhập họ tên'>
-            </div>
-            <div class='col-md-6'>
-                <label class='form-label'>Email</label>
-                <input type='email' class='form-control' placeholder='Nhập email'>
-            </div>
-            <div class='col-12'>
-                <button type='submit' class='btn btn-success'>Gửi thông tin</button>
-            </div>
-        </form>
-    </div>";
-
-// Test 5: Responsive test
-echo "<div class='test-box'>
-        <h3>5. Responsive Test</h3>
-        <div class='row text-center'>
-            <div class='col-lg-3 col-md-6 col-sm-12 bg-primary text-white p-3 m-1'>LG - 3</div>
-            <div class='col-lg-3 col-md-6 col-sm-12 bg-success text-white p-3 m-1'>LG - 3</div>
-            <div class='col-lg-3 col-md-6 col-sm-12 bg-warning text-white p-3 m-1'>LG - 3</div>
-            <div class='col-lg-3 col-md-6 col-sm-12 bg-danger text-white p-3 m-1'>LG - 3</div>
         </div>
-    </div>";
+    </section>
 
-echo "</div></body></html>";
-?>
+    <section class="reviews" id="reviews">
+        <div class="container">
+            <h2 class="section-title">Đánh giá từ khách hàng</h2>
+            <div class="review-grid">
+                <?php foreach($reviews as $review): ?>
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="customer-name"><?php echo htmlspecialchars($review['customer_name']); ?></div>
+                        <div class="rating">
+                            <?php 
+                            for($i = 1; $i <= 5; $i++) {
+                                echo $i <= $review['rating'] ? '★' : '☆';
+                            }
+                            ?>
+                        </div>
+                    </div>
+                    <p><?php echo htmlspecialchars($review['comment']); ?></p>
+                </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="#">Chính sách bảo mật</a>
+                <a href="#">Điều khoản sử dụng</a>
+                <a href="#">Bản quyền</a>
+                <a href="#">Liên hệ</a>
+            </div>
+            <div class="copyright">
+                Copyright © 2024 Apple Inc. Mọi quyền được bảo lưu.
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
