@@ -1,331 +1,367 @@
-<?php
-include 'config.php';
-
-// Lấy thông tin sản phẩm
-$stmt = $pdo->query("SELECT * FROM products WHERE id = 1");
-$product = $stmt->fetch(PDO::FETCH_ASSOC);
-
-// Lấy đánh giá
-$reviews_stmt = $pdo->prepare("SELECT * FROM reviews WHERE product_id = ? ORDER BY created_at DESC LIMIT 3");
-$reviews_stmt->execute([1]);
-$reviews = $reviews_stmt->fetchAll(PDO::FETCH_ASSOC);
-?>
-
 <!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>iPhone 17 ProMax - Apple</title>
+    <title>Website Đẹp - PHP Modern</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
         }
-        
+
         body {
-            background-color: #f5f5f7;
-            color: #1d1d1f;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
         }
-        
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
         }
-        
+
+        /* Header */
         header {
-            background: #000;
-            color: #fff;
-            padding: 15px 0;
-            position: sticky;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
             top: 0;
-            z-index: 100;
+            z-index: 1000;
         }
-        
+
         .navbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 1rem 0;
         }
-        
+
         .logo {
-            font-size: 24px;
+            font-size: 1.8rem;
             font-weight: bold;
-            color: #fff;
+            color: #667eea;
             text-decoration: none;
         }
-        
+
         .nav-links {
             display: flex;
             list-style: none;
+            gap: 2rem;
         }
-        
-        .nav-links li {
-            margin-left: 30px;
-        }
-        
+
         .nav-links a {
-            color: #fff;
             text-decoration: none;
-            font-size: 14px;
-            transition: color 0.3s;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s ease;
         }
-        
+
         .nav-links a:hover {
-            color: #2997ff;
+            color: #667eea;
         }
-        
+
+        /* Hero Section */
         .hero {
-            background: linear-gradient(135deg, #000 0%, #333 100%);
-            color: #fff;
-            padding: 100px 0;
+            padding: 150px 0 100px;
             text-align: center;
+            color: white;
         }
-        
+
         .hero h1 {
-            font-size: 56px;
-            margin-bottom: 10px;
-            font-weight: 700;
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
         }
-        
+
         .hero p {
-            font-size: 28px;
-            margin-bottom: 20px;
-            font-weight: 300;
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.2s both;
         }
-        
-        .hero .price {
-            font-size: 24px;
-            color: #86868b;
-            margin-bottom: 30px;
-        }
-        
+
         .btn {
             display: inline-block;
-            background: #0071e3;
-            color: #fff;
-            padding: 12px 25px;
-            border-radius: 30px;
+            padding: 12px 30px;
+            background: #ff6b6b;
+            color: white;
             text-decoration: none;
-            font-weight: 500;
-            transition: background 0.3s;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            animation: fadeInUp 1s ease 0.4s both;
         }
-        
+
         .btn:hover {
-            background: #0077ed;
+            background: #ff5252;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255, 107, 107, 0.3);
         }
-        
+
+        /* Features Section */
         .features {
-            padding: 80px 0;
-            background: #fff;
+            padding: 100px 0;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            margin: 50px 0;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
         }
-        
+
         .section-title {
             text-align: center;
-            font-size: 40px;
-            margin-bottom: 50px;
-            font-weight: 600;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #333;
         }
-        
-        .feature-grid {
+
+        .features-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
+            gap: 2rem;
         }
-        
+
         .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
             text-align: center;
-            padding: 30px;
-            border-radius: 18px;
-            background: #f5f5f7;
-            transition: transform 0.3s;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
         }
-        
+
         .feature-card:hover {
             transform: translateY(-10px);
         }
-        
+
         .feature-icon {
-            font-size: 48px;
-            margin-bottom: 20px;
-            color: #0071e3;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #667eea;
         }
-        
+
         .feature-card h3 {
-            font-size: 24px;
-            margin-bottom: 15px;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #333;
         }
-        
-        .reviews {
-            padding: 80px 0;
-            background: #f5f5f7;
+
+        /* PHP Info Section */
+        .php-info {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 3rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            color: white;
         }
-        
-        .review-grid {
+
+        .php-info h2 {
+            margin-bottom: 1rem;
+        }
+
+        .info-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
         }
-        
-        .review-card {
-            background: #fff;
-            padding: 30px;
-            border-radius: 18px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        
-        .review-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-        
-        .customer-name {
-            font-weight: 600;
-            font-size: 18px;
-        }
-        
-        .rating {
-            color: #ff9500;
-        }
-        
-        footer {
-            background: #000;
-            color: #86868b;
-            padding: 50px 0 20px;
+
+        .info-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
             text-align: center;
         }
-        
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-bottom: 30px;
+
+        /* Footer */
+        footer {
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 100px;
         }
-        
-        .footer-links a {
-            color: #86868b;
-            text-decoration: none;
-            margin: 0 15px;
-            font-size: 14px;
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
-        
-        .footer-links a:hover {
-            color: #fff;
-        }
-        
-        .copyright {
-            font-size: 12px;
-            margin-top: 20px;
-        }
-        
+
+        /* Responsive */
         @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 40px;
-            }
-            
-            .hero p {
-                font-size: 22px;
-            }
-            
             .nav-links {
                 display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Header -->
     <header>
         <div class="container">
             <nav class="navbar">
-                <a href="#" class="logo">Apple</a>
+                <a href="#" class="logo">PHP<span style="color: #ff6b6b;">Modern</span></a>
                 <ul class="nav-links">
-                    <li><a href="#">Trang chủ</a></li>
+                    <li><a href="#home">Trang chủ</a></li>
                     <li><a href="#features">Tính năng</a></li>
-                    <li><a href="#reviews">Đánh giá</a></li>
-                    <li><a href="#" class="btn">Mua ngay</a></li>
+                    <li><a href="#about">Giới thiệu</a></li>
+                    <li><a href="#contact">Liên hệ</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <section class="hero">
+    <!-- Hero Section -->
+    <section class="hero" id="home">
         <div class="container">
-            <h1>iPhone 17 ProMax</h1>
-            <p>Tương lai trong tầm tay bạn</p>
-            <div class="price">Từ $<?php echo $product['price']; ?></div>
-            <a href="#" class="btn">Mua ngay</a>
+            <h1>Chào mừng đến với Website PHP Hiện đại</h1>
+            <p>Thiết kế đẹp mắt, code tối ưu và trải nghiệm người dùng tuyệt vời</p>
+            <a href="#features" class="btn">Khám phá ngay</a>
         </div>
     </section>
 
-    <section class="features" id="features">
-        <div class="container">
-            <h2 class="section-title">Tính năng đột phá</h2>
-            <div class="feature-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">📱</div>
-                    <h3>Màn hình 6.9"</h3>
-                    <p>Màn hình Super Retina XDR với công nghệ ProMotion 120Hz</p>
+    <!-- PHP Dynamic Content -->
+    <div class="container">
+        <?php
+        // PHP code xử lý động
+        date_default_timezone_set('Asia/Ho_Chi_Minh');
+        $current_time = date('H:i:s d/m/Y');
+        $visitor_ip = $_SERVER['REMOTE_ADDR'];
+        $server_software = $_SERVER['SERVER_SOFTWARE'];
+        $php_version = phpversion();
+        
+        // Mảng tính năng
+        $features = [
+            [
+                'icon' => '🚀',
+                'title' => 'Hiệu suất cao',
+                'description' => 'Tối ưu hóa tốc độ tải trang và xử lý dữ liệu'
+            ],
+            [
+                'icon' => '🎨',
+                'title' => 'Thiết kế đẹp',
+                'description' => 'Giao diện hiện đại, responsive trên mọi thiết bị'
+            ],
+            [
+                'icon' => '🔒',
+                'title' => 'Bảo mật',
+                'description' => 'Bảo vệ website khỏi các mối đe dọa bảo mật'
+            ]
+        ];
+        ?>
+        
+        <!-- PHP Info Section -->
+        <section class="php-info">
+            <h2>Thông tin Server</h2>
+            <div class="info-grid">
+                <div class="info-item">
+                    <strong>Thời gian hiện tại:</strong><br>
+                    <?php echo $current_time; ?>
                 </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🚀</div>
-                    <h3>Chip A17 Bionic</h3>
-                    <p>Hiệu năng vượt trội với chip xử lý mạnh mẽ nhất từ Apple</p>
+                <div class="info-item">
+                    <strong>Địa chỉ IP:</strong><br>
+                    <?php echo $visitor_ip; ?>
                 </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📸</div>
-                    <h3>Camera 48MP</h3>
-                    <p>Hệ thống camera chuyên nghiệp với khả năng quay video 8K</p>
+                <div class="info-item">
+                    <strong>PHP Version:</strong><br>
+                    <?php echo $php_version; ?>
                 </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🔋</div>
-                    <h3>Pin 5000mAh</h3>
-                    <p>Thời lượng pin cả ngày với công nghệ sạc nhanh 45W</p>
+                <div class="info-item">
+                    <strong>Server:</strong><br>
+                    <?php echo $server_software; ?>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section class="reviews" id="reviews">
-        <div class="container">
-            <h2 class="section-title">Đánh giá từ khách hàng</h2>
-            <div class="review-grid">
-                <?php foreach($reviews as $review): ?>
-                <div class="review-card">
-                    <div class="review-header">
-                        <div class="customer-name"><?php echo htmlspecialchars($review['customer_name']); ?></div>
-                        <div class="rating">
-                            <?php 
-                            for($i = 1; $i <= 5; $i++) {
-                                echo $i <= $review['rating'] ? '★' : '☆';
-                            }
-                            ?>
-                        </div>
-                    </div>
-                    <p><?php echo htmlspecialchars($review['comment']); ?></p>
+        <!-- Features Section -->
+        <section class="features" id="features">
+            <h2 class="section-title">Tính năng nổi bật</h2>
+            <div class="features-grid">
+                <?php foreach ($features as $feature): ?>
+                <div class="feature-card">
+                    <div class="feature-icon"><?php echo $feature['icon']; ?></div>
+                    <h3><?php echo $feature['title']; ?></h3>
+                    <p><?php echo $feature['description']; ?></p>
                 </div>
                 <?php endforeach; ?>
             </div>
-        </div>
-    </section>
+        </section>
 
+        <!-- Dynamic Content Section -->
+        <section class="features">
+            <h2 class="section-title">Nội dung động với PHP</h2>
+            <div class="features-grid">
+                <?php
+                // Tạo nội dung động
+                $dynamic_content = [
+                    'Hôm nay là một ngày tuyệt vời!',
+                    'Chào mừng bạn đến với thế giới PHP',
+                    'Website này được xây dựng với PHP thuần'
+                ];
+                
+                foreach ($dynamic_content as $index => $content):
+                ?>
+                <div class="feature-card">
+                    <div class="feature-icon">⭐</div>
+                    <h3>Nội dung <?php echo $index + 1; ?></h3>
+                    <p><?php echo $content; ?></p>
+                    <small>Được tạo lúc: <?php echo date('H:i:s'); ?></small>
+                </div>
+                <?php endforeach; ?>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
     <footer>
         <div class="container">
-            <div class="footer-links">
-                <a href="#">Chính sách bảo mật</a>
-                <a href="#">Điều khoản sử dụng</a>
-                <a href="#">Bản quyền</a>
-                <a href="#">Liên hệ</a>
-            </div>
-            <div class="copyright">
-                Copyright © 2024 Apple Inc. Mọi quyền được bảo lưu.
-            </div>
+            <p>&copy; <?php echo date('Y'); ?> Website PHP Modern. Được phát triển với ❤️ bằng PHP</p>
+            <p>Phiên bản PHP: <?php echo $php_version; ?> | Thời gian: <?php echo $current_time; ?></p>
         </div>
     </footer>
+
+    <script>
+        // JavaScript cho hiệu ứng scroll mượt
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Hiệu ứng khi scroll
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(255, 255, 255, 0.98)';
+            } else {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+            }
+        });
+    </script>
 </body>
 </html>
