@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Website Đẹp - PHP Modern</title>
+    <title>Vision - Honda Vision 2024 | Chính Hãng</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -11,12 +12,20 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --primary: #e60012;
+            --secondary: #1a1a1a;
+            --accent: #ffd700;
+            --text: #333;
+            --light: #f8f9fa;
+            --gray: #6c757d;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
+            color: var(--text);
+            overflow-x: hidden;
         }
 
         .container {
@@ -27,13 +36,34 @@
 
         /* Header */
         header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(135deg, var(--secondary) 0%, #333 100%);
+            color: white;
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+        }
+
+        .header-top {
+            background: var(--primary);
+            padding: 8px 0;
+            font-size: 0.9rem;
+        }
+
+        .header-top .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-contact span {
+            margin-right: 20px;
+        }
+
+        .header-contact i {
+            margin-right: 5px;
+            color: var(--accent);
         }
 
         .navbar {
@@ -44,10 +74,18 @@
         }
 
         .logo {
-            font-size: 1.8rem;
+            font-size: 2rem;
             font-weight: bold;
-            color: #667eea;
+            color: white;
             text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            color: var(--primary);
+            margin-right: 10px;
+            font-size: 2.5rem;
         }
 
         .nav-links {
@@ -57,68 +95,125 @@
         }
 
         .nav-links a {
+            color: white;
             text-decoration: none;
-            color: #333;
             font-weight: 500;
             transition: color 0.3s ease;
+            position: relative;
         }
 
         .nav-links a:hover {
-            color: #667eea;
+            color: var(--accent);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
         }
 
         /* Hero Section */
         .hero {
-            padding: 150px 0 100px;
-            text-align: center;
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
             color: white;
+            text-align: center;
+            margin-top: 80px;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
         }
 
         .hero h1 {
-            font-size: 3.5rem;
+            font-size: 4rem;
             margin-bottom: 1rem;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
             animation: fadeInUp 1s ease;
+        }
+
+        .hero .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            color: var(--accent);
+            animation: fadeInUp 1s ease 0.3s both;
         }
 
         .hero p {
             font-size: 1.2rem;
             margin-bottom: 2rem;
-            opacity: 0.9;
-            animation: fadeInUp 1s ease 0.2s both;
+            animation: fadeInUp 1s ease 0.6s both;
         }
 
         .btn {
             display: inline-block;
-            padding: 12px 30px;
-            background: #ff6b6b;
+            padding: 15px 40px;
+            background: var(--primary);
             color: white;
             text-decoration: none;
             border-radius: 50px;
             font-weight: 600;
+            font-size: 1.1rem;
             transition: all 0.3s ease;
-            animation: fadeInUp 1s ease 0.4s both;
+            border: 2px solid var(--primary);
+            animation: fadeInUp 1s ease 0.9s both;
         }
 
         .btn:hover {
-            background: #ff5252;
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(255, 107, 107, 0.3);
+            background: transparent;
+            color: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(230,0,18,0.3);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid white;
+            margin-left: 15px;
+        }
+
+        .btn-outline:hover {
+            background: white;
+            color: var(--secondary);
         }
 
         /* Features Section */
         .features {
             padding: 100px 0;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            margin: 50px 0;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            background: var(--light);
         }
 
         .section-title {
             text-align: center;
             font-size: 2.5rem;
             margin-bottom: 3rem;
-            color: #333;
+            color: var(--secondary);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--primary);
         }
 
         .features-grid {
@@ -129,64 +224,276 @@
 
         .feature-card {
             background: white;
-            padding: 2rem;
+            padding: 3rem 2rem;
             border-radius: 15px;
             text-align: center;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--primary);
         }
 
         .feature-card:hover {
             transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
         }
 
         .feature-icon {
             font-size: 3rem;
-            margin-bottom: 1rem;
-            color: #667eea;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
         }
 
         .feature-card h3 {
             font-size: 1.5rem;
             margin-bottom: 1rem;
-            color: #333;
+            color: var(--secondary);
         }
 
-        /* PHP Info Section */
-        .php-info {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            padding: 3rem;
-            border-radius: 15px;
-            margin: 2rem 0;
+        /* Gallery Section */
+        .gallery {
+            padding: 100px 0;
+            background: var(--secondary);
             color: white;
         }
 
-        .php-info h2 {
+        .gallery .section-title {
+            color: white;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin-top: 3rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            height: 300px;
+            cursor: pointer;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            padding: 2rem;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            transform: translateY(0);
+        }
+
+        /* Specs Section */
+        .specs {
+            padding: 100px 0;
+            background: white;
+        }
+
+        .specs-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .specs-image {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .specs-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .specs-list {
+            list-style: none;
+        }
+
+        .specs-item {
+            padding: 1.5rem 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .specs-item:last-child {
+            border-bottom: none;
+        }
+
+        .specs-label {
+            font-weight: 600;
+            color: var(--secondary);
+        }
+
+        .specs-value {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* Colors Section */
+        .colors {
+            padding: 100px 0;
+            background: var(--light);
+            text-align: center;
+        }
+
+        .color-options {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .color-option {
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .color-option:hover {
+            transform: translateY(-10px);
+        }
+
+        .color-swatch {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+            border: 3px solid white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        /* CTA Section */
+        .cta {
+            padding: 100px 0;
+            background: linear-gradient(135deg, var(--primary) 0%, #b3000e 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .cta h2 {
+            font-size: 3rem;
             margin-bottom: 1rem;
         }
 
-        .info-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-top: 1rem;
+        .cta p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
         }
 
-        .info-item {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 1rem;
-            border-radius: 10px;
-            text-align: center;
+        .cta .btn {
+            background: var(--accent);
+            color: var(--secondary);
+            border-color: var(--accent);
+        }
+
+        .cta .btn:hover {
+            background: transparent;
+            color: var(--accent);
         }
 
         /* Footer */
         footer {
-            background: rgba(0, 0, 0, 0.8);
+            background: var(--secondary);
             color: white;
+            padding: 50px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-column h3 {
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-column ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--accent);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
             text-align: center;
-            padding: 2rem 0;
-            margin-top: 100px;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #ccc;
         }
 
         /* Animations */
@@ -211,8 +518,14 @@
                 font-size: 2.5rem;
             }
             
-            .features-grid {
+            .specs-container {
                 grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .btn-outline {
+                margin-left: 0;
+                margin-top: 15px;
             }
         }
     </style>
@@ -220,13 +533,32 @@
 <body>
     <!-- Header -->
     <header>
+        <div class="header-top">
+            <div class="container">
+                <div class="header-contact">
+                    <span><i class="fas fa-phone"></i> 1800 8001</span>
+                    <span><i class="fas fa-envelope"></i> contact@honda-vision.vn</span>
+                </div>
+                <div class="header-social">
+                    <span>Theo dõi chúng tôi:</span>
+                    <i class="fab fa-facebook"></i>
+                    <i class="fab fa-youtube"></i>
+                    <i class="fab fa-tiktok"></i>
+                </div>
+            </div>
+        </div>
         <div class="container">
             <nav class="navbar">
-                <a href="#" class="logo">PHP<span style="color: #ff6b6b;">Modern</span></a>
+                <a href="#" class="logo">
+                    <i class="fas fa-motorcycle"></i>
+                    VISION
+                </a>
                 <ul class="nav-links">
                     <li><a href="#home">Trang chủ</a></li>
                     <li><a href="#features">Tính năng</a></li>
-                    <li><a href="#about">Giới thiệu</a></li>
+                    <li><a href="#gallery">Thư viện ảnh</a></li>
+                    <li><a href="#specs">Thông số kỹ thuật</a></li>
+                    <li><a href="#colors">Màu sắc</a></li>
                     <li><a href="#contact">Liên hệ</a></li>
                 </ul>
             </nav>
@@ -236,114 +568,214 @@
     <!-- Hero Section -->
     <section class="hero" id="home">
         <div class="container">
-            <h1>Chào mừng đến với Website PHP Hiện đại</h1>
-            <p>Thiết kế đẹp mắt, code tối ưu và trải nghiệm người dùng tuyệt vời</p>
-            <a href="#features" class="btn">Khám phá ngay</a>
+            <div class="hero-content">
+                <h1>HONDA VISION 2024</h1>
+                <div class="subtitle">Đẳng cấp vượt trội - Phong cách riêng biệt</div>
+                <p>Chiếc xe tay ga hoàn hảo cho cuộc sống hiện đại. Kết hợp công nghệ tiên tiến và thiết kế sang trọng.</p>
+                <div>
+                    <a href="#specs" class="btn">Khám phá ngay</a>
+                    <a href="#contact" class="btn btn-outline">Đăng ký lái thử</a>
+                </div>
+            </div>
         </div>
     </section>
 
-    <!-- PHP Dynamic Content -->
-    <div class="container">
-        <?php
-        // PHP code xử lý động
-        date_default_timezone_set('Asia/Ho_Chi_Minh');
-        $current_time = date('H:i:s d/m/Y');
-        $visitor_ip = $_SERVER['REMOTE_ADDR'];
-        $server_software = $_SERVER['SERVER_SOFTWARE'];
-        $php_version = phpversion();
-        
-        // Mảng tính năng
-        $features = [
-            [
-                'icon' => '🚀',
-                'title' => 'Hiệu suất cao',
-                'description' => 'Tối ưu hóa tốc độ tải trang và xử lý dữ liệu'
-            ],
-            [
-                'icon' => '🎨',
-                'title' => 'Thiết kế đẹp',
-                'description' => 'Giao diện hiện đại, responsive trên mọi thiết bị'
-            ],
-            [
-                'icon' => '🔒',
-                'title' => 'Bảo mật',
-                'description' => 'Bảo vệ website khỏi các mối đe dọa bảo mật'
-            ]
-        ];
-        ?>
-        
-        <!-- PHP Info Section -->
-        <section class="php-info">
-            <h2>Thông tin Server</h2>
-            <div class="info-grid">
-                <div class="info-item">
-                    <strong>Thời gian hiện tại:</strong><br>
-                    <?php echo $current_time; ?>
-                </div>
-                <div class="info-item">
-                    <strong>Địa chỉ IP:</strong><br>
-                    <?php echo $visitor_ip; ?>
-                </div>
-                <div class="info-item">
-                    <strong>PHP Version:</strong><br>
-                    <?php echo $php_version; ?>
-                </div>
-                <div class="info-item">
-                    <strong>Server:</strong><br>
-                    <?php echo $server_software; ?>
-                </div>
-            </div>
-        </section>
-
-        <!-- Features Section -->
-        <section class="features" id="features">
-            <h2 class="section-title">Tính năng nổi bật</h2>
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <h2 class="section-title">Tính Năng Nổi Bật</h2>
             <div class="features-grid">
-                <?php foreach ($features as $feature): ?>
                 <div class="feature-card">
-                    <div class="feature-icon"><?php echo $feature['icon']; ?></div>
-                    <h3><?php echo $feature['title']; ?></h3>
-                    <p><?php echo $feature['description']; ?></p>
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Động cơ mạnh mẽ</h3>
+                    <p>Động cơ 125cc phun xăng điện tử PGM-FI, tiết kiệm nhiên liệu tối ưu</p>
                 </div>
-                <?php endforeach; ?>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-tachometer-alt"></i>
+                    </div>
+                    <h3>Vận hành êm ái</h3>
+                    <p>Hệ thống treo và phanh hiện đại, mang lại trải nghiệm lái xe tuyệt vời</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <h3>Thiết kế thời thượng</h3>
+                    <p>Ngoại hình trẻ trung, đèn LED hiện đại, nhiều phiên bản màu sắc</p>
+                </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- Dynamic Content Section -->
-        <section class="features">
-            <h2 class="section-title">Nội dung động với PHP</h2>
-            <div class="features-grid">
-                <?php
-                // Tạo nội dung động
-                $dynamic_content = [
-                    'Hôm nay là một ngày tuyệt vời!',
-                    'Chào mừng bạn đến với thế giới PHP',
-                    'Website này được xây dựng với PHP thuần'
-                ];
-                
-                foreach ($dynamic_content as $index => $content):
-                ?>
-                <div class="feature-card">
-                    <div class="feature-icon">⭐</div>
-                    <h3>Nội dung <?php echo $index + 1; ?></h3>
-                    <p><?php echo $content; ?></p>
-                    <small>Được tạo lúc: <?php echo date('H:i:s'); ?></small>
+    <!-- Gallery Section -->
+    <section class="gallery" id="gallery">
+        <div class="container">
+            <h2 class="section-title">Thư Viện Ảnh</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Vision Front">
+                    <div class="gallery-overlay">
+                        <h3>Thiết kế tổng thể</h3>
+                    </div>
                 </div>
-                <?php endforeach; ?>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1558979150-6c3f77b32b8a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Vision Side">
+                    <div class="gallery-overlay">
+                        <h3>Phía bên hông</h3>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1571068316344-75bc76f77890?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Vision Dashboard">
+                    <div class="gallery-overlay">
+                        <h3>Bảng điều khiển</h3>
+                    </div>
+                </div>
             </div>
-        </section>
-    </div>
+        </div>
+    </section>
+
+    <!-- Specs Section -->
+    <section class="specs" id="specs">
+        <div class="container">
+            <h2 class="section-title">Thông Số Kỹ Thuật</h2>
+            <div class="specs-container">
+                <div class="specs-image">
+                    <img src="https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Vision Technical">
+                </div>
+                <div class="specs-content">
+                    <ul class="specs-list">
+                        <li class="specs-item">
+                            <span class="specs-label">Động cơ</span>
+                            <span class="specs-value">125cc, 4 thì, làm mát bằng không khí</span>
+                        </li>
+                        <li class="specs-item">
+                            <span class="specs-label">Công suất tối đa</span>
+                            <span class="specs-value">8.8 kW @ 8500 rpm</span>
+                        </li>
+                        <li class="specs-item">
+                            <span class="specs-label">Mô-men xoắn cực đại</span>
+                            <span class="specs-value">11 Nm @ 5000 rpm</span>
+                        </li>
+                        <li class="specs-item">
+                            <span class="specs-label">Hệ thống khởi động</span>
+                            <span class="specs-value">Điện, kết hợp kick</span>
+                        </li>
+                        <li class="specs-item">
+                            <span class="specs-label">Hệ thống treo trước</span>
+                            <span class="specs-value">Ống lồng phuộc thuỷ lực</span>
+                        </li>
+                        <li class="specs-item">
+                            <span class="specs-label">Hệ thống treo sau</span>
+                            <span class="specs-value">Lò xo trụ đơn</span>
+                        </li>
+                        <li class="specs-item">
+                            <span class="specs-label">Phanh trước/sau</span>
+                            <span class="specs-value">Đĩa/Phống</span>
+                        </li>
+                        <li class="specs-item">
+                            <span class="specs-label">Tiêu thụ nhiên liệu</span>
+                            <span class="specs-value">1.8 L/100km</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Colors Section -->
+    <section class="colors" id="colors">
+        <div class="container">
+            <h2 class="section-title">Màu Sắc Có Sẵn</h2>
+            <div class="color-options">
+                <div class="color-option">
+                    <div class="color-swatch" style="background: #1a1a1a;"></div>
+                    <span>Đen bóng</span>
+                </div>
+                <div class="color-option">
+                    <div class="color-swatch" style="background: #c0c0c0;"></div>
+                    <span>Bạc ánh kim</span>
+                </div>
+                <div class="color-option">
+                    <div class="color-swatch" style="background: #e60012;"></div>
+                    <span>Đỏ thể thao</span>
+                </div>
+                <div class="color-option">
+                    <div class="color-swatch" style="background: #ffffff; border: 2px solid #ccc;"></div>
+                    <span>Trắng thanh lịch</span>
+                </div>
+                <div class="color-option">
+                    <div class="color-swatch" style="background: #0056b3;"></div>
+                    <span>Xanh đại dương</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta" id="contact">
+        <div class="container">
+            <h2>Đã Sẵn Sàng Sở Hữu Chiếc Vision?</h2>
+            <p>Đăng ký ngay để nhận tư vấn và ưu đãi đặc biệt</p>
+            <a href="#" class="btn">
+                <i class="fas fa-calendar-check"></i>
+                Đặt lịch lái thử ngay
+            </a>
+        </div>
+    </section>
 
     <!-- Footer -->
     <footer>
         <div class="container">
-            <p>&copy; <?php echo date('Y'); ?> Website PHP Modern. Được phát triển với ❤️ bằng PHP</p>
-            <p>Phiên bản PHP: <?php echo $php_version; ?> | Thời gian: <?php echo $current_time; ?></p>
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>VỀ HONDA VISION</h3>
+                    <p>Honda Vision - Biểu tượng của sự tiện lợi và phong cách. Chiếc xe tay ga hoàn hảo cho cuộc sống đô thị hiện đại.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>LIÊN KẾT NHANH</h3>
+                    <ul>
+                        <li><a href="#home">Trang chủ</a></li>
+                        <li><a href="#features">Tính năng</a></li>
+                        <li><a href="#gallery">Thư viện ảnh</a></li>
+                        <li><a href="#specs">Thông số kỹ thuật</a></li>
+                        <li><a href="#colors">Màu sắc</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>THÔNG TIN LIÊN HỆ</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Nguyễn Văn Linh, Q.7, TP.HCM</li>
+                        <li><i class="fas fa-phone"></i> 1800 8001</li>
+                        <li><i class="fas fa-envelope"></i> contact@honda-vision.vn</li>
+                        <li><i class="fas fa-clock"></i> Thứ 2 - CN: 8:00 - 20:00</li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>ĐĂNG KÝ NHẬN TIN</h3>
+                    <p>Nhận thông tin khuyến mãi và tin tức mới nhất về Honda Vision</p>
+                    <form style="margin-top: 1rem;">
+                        <input type="email" placeholder="Email của bạn" style="padding: 10px; width: 100%; margin-bottom: 10px; border: none; border-radius: 5px;">
+                        <button type="submit" class="btn" style="width: 100%; padding: 10px;">Đăng ký</button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Honda Vision. Tất cả các quyền được bảo lưu. | Thiết kế bởi Honda Vietnam</p>
+            </div>
         </div>
     </footer>
 
     <script>
-        // JavaScript cho hiệu ứng scroll mượt
+        // Smooth scrolling
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -353,14 +785,45 @@
             });
         });
 
-        // Hiệu ứng khi scroll
+        // Header background on scroll
         window.addEventListener('scroll', function() {
             const header = document.querySelector('header');
             if (window.scrollY > 100) {
-                header.style.background = 'rgba(255, 255, 255, 0.98)';
+                header.style.background = 'linear-gradient(135deg, #1a1a1a 0%, #000 100%)';
             } else {
-                header.style.background = 'rgba(255, 255, 255, 0.95)';
+                header.style.background = 'linear-gradient(135deg, var(--secondary) 0%, #333 100%)';
             }
+        });
+
+        // Color selection
+        document.querySelectorAll('.color-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.color-option').forEach(opt => {
+                    opt.style.transform = 'scale(1)';
+                });
+                this.style.transform = 'scale(1.1)';
+                
+                const colorName = this.querySelector('span').textContent;
+                alert(`Bạn đã chọn màu: ${colorName}`);
+            });
+        });
+
+        // Animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 1s ease forwards';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.feature-card, .gallery-item, .specs-item').forEach(el => {
+            observer.observe(el);
         });
     </script>
 </body>
