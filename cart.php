@@ -17,7 +17,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-		<title>Giỏ hàng</title>
+		<title>Giỏ hàng của bạn</title>
 
 		<link rel="shortcut icon" href="img/favicon.png">
  		<!-- Google font -->
