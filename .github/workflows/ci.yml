@@ -20,6 +20,48 @@ jobs:
         echo "=== CHECKING PHP SYNTAX ==="
         find . -name "*.php" -exec php -l {} \;
         echo "✅ PHP check completed!"
+    - name: Test HTML Output and Validation
+      run: |
+        echo "=== TESTING HTML OUTPUT ==="
+        
+        # Start PHP built-in server trong background
+        echo "🚀 Starting PHP server..."
+        php -S localhost:8000 > /dev/null 2>&1 &
+        SERVER_PID=$!
+        sleep 5
+        
+        # Test homepage HTML
+        echo "📝 Testing homepage HTML structure..."
+        curl -s http://localhost:8000/ > output.html
+        
+        # Check critical HTML tags
+        echo "🔍 Checking HTML structure..."
+        if ! grep -q "<title>.*</title>" output.html; then
+          echo "❌ LỖI: Thiếu thẻ <title> hoặc syntax sai"
+          echo "=== CURRENT HTML ==="
+          cat output.html
+          kill $SERVER_PID 2>/dev/null || true
+          exit 1
+        fi
+        
+        # Check for proper HTML structure
+        if ! grep -q "<html" output.html || ! grep -q "</html>" output.html; then
+          echo "❌ LỖI: HTML structure không đầy đủ"
+          kill $SERVER_PID 2>/dev/null || true
+          exit 1
+        fi
+        
+        # Check for broken tags (trường hợp của bạn)
+        if grep -E "<[^>]*[^/]>" output.html | grep -v "</" | grep -v "<!"; then
+          echo "❌ LỖI: Phát hiện thẻ HTML không đóng"
+          echo "=== BROKEN TAGS ==="
+          grep -E "<[^>]*[^/]>" output.html | grep -v "</" | grep -v "<!"
+          kill $SERVER_PID 2>/dev/null || true
+          exit 1
+        fi
+        
+        echo "✅ HTML output validation passed!"
+        kill $SERVER_PID 2>/dev/null || true
 
   deploy-to-production:
     runs-on: ubuntu-latest
