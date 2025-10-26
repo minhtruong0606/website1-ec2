@@ -20,24 +20,25 @@ jobs:
         echo "=== CHECKING PHP SYNTAX ==="
         find . -name "*.php" -exec php -l {} \;
         echo "✅ PHP check completed!"
-     - name: Test HTML Output and Validation
+    - name: Test HTML Output and Validation
       run: |
-    echo "=== TESTING HTML SYNTAX ==="
-    
-    # Kiểm tra trực tiếp trong file PHP
-    if grep -q "<title>.*/title>" index.php && ! grep -q "<title>.*</title>" index.php; then
-      echo "❌ LỖI: Thẻ title không đóng đúng trong index.php"
-      grep "<title>" index.php
-      exit 1
-    fi
-    
-    # Kiểm tra các thẻ HTML cơ bản
-    if ! grep -q "<html" index.php || ! grep -q "</html>" index.php; then
-      echo "❌ LỖI: Thiếu thẻ html"
-      exit 1
-    fi
-    
-    echo "✅ HTML syntax validation passed!"
+          echo "=== TESTING HTML SYNTAX ==="
+
+          # Kiểm tra trực tiếp trong file PHP
+          if grep -q "<title>.*/title>" index.php &&  ! grep -q "<title>.*</title>" index.php; then
+           echo "❌ LỖI: Thẻ title không đóng đúng trong index.php"
+           grep "<title>" index.php
+           exit 1
+          fi
+
+          # Kiểm tra các thẻ HTML cơ bản
+          if ! grep -q "<html" index.php || ! grep -q "</html>" index.php; then
+          echo "❌ LỖI: Thiếu thẻ html"
+          exit 1
+          fi
+
+          echo "✅ HTML syntax validation passed!"
+
   deploy-to-production:
     runs-on: ubuntu-latest
     needs: build-and-test
