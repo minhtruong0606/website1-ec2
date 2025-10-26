@@ -138,7 +138,7 @@
 											<div class='row'>
 												<img src='img/giohangtrong.png' />
 											</div>
-											Giỏ hàng không có sản phẩm nào cả!
+											Giỏ hàng của bạn chưa có sản phẩm!
 											<a href='index.php' class='primary-btn order-submit'>Quay về trang chủ</a>
 										</div>";
 						?>
